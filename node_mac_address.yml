@@ -1,27 +1,22 @@
 - name: verify the Mac and Product_uuid for all nodes
-
   hosts: all
-
   #become: yes
   gather_facts: yes
-
   tasks:
-
       # shell: "ethtool -P eth0 | awk '{ print $NF };'"
-
        #register: mac_address
-
      - name: "node macaddress"
        debug: 
-
          #msg: "{{ hostvars[inventory_hostname] }}"
           msg: "{{hostvars[inventory_hostname].ansible_default_ipv4.macaddress}}"
+          
      - name: "uuid"
        debug:   msg={{hostvars[inventory_hostname].ansible_product_uuid}}
      - pause:
          prompt: check the uid and mac unique?
          echo: yes 
        register: check_point
+       
      - debug:
         msg: "{{check_point}}"
        #when: check_point.rc == "0"
