@@ -1,19 +1,10 @@
 - name: start the docker service
-
   hosts: all
-
-  gather_facts: no
- 
+  gather_facts: no 
   become: yes
-
   tasks:
-
   - name: start docker service
-
     service: 
-
       name: docker
-
       state: started
-
       enabled: yes
