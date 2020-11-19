@@ -1,2 +1,8 @@
-web-01 ansible_host=web-01.internal.cloudapp.net ansible_connection=ssh  ansible_user=xploritec ansible_ssh_pass=Tem01ppassxrw1sd#007 ansible_become_password=Tem01ppassxrw1sd#007   
-web-02 ansible_host=web-02.internal.cloudapp.net  ansible_user=xploritec ansible_ssh_pass=Tem01ppassxrw1sd#007 ansible_become_password=Tem01ppassxrw1sd#007
+web-01 ansible_host=web-01.internal.cloudapp.net ansible_connection=ssh  ansible_user=xploritecc ansible_ssh_pass=Tem01ppassxrw1sd#007 ansible_become_password=Tem01ppassxrw1sd#007   
+web-02 ansible_host=web-02.internal.cloudapp.net  ansible_user=xploritecc ansible_ssh_pass=Tem01ppassxrw1sd#007 ansible_become_password=Tem01ppassxrw1sd#007
+
+[master]
+ web-01
+
+[worker]
+ web-02
