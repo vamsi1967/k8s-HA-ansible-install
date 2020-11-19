@@ -1,29 +1,16 @@
 - name: install docker
-
   hosts: all
-
   gather_facts: yes
-
   become: yes
-
   tasks:
-
     - name: install docker
-
       package:
-
         name: 
-
          - docker-ce
-
          - docker-ce-cli
-
          - containerd.io
-
         state: present
-
       register: dockerinstall
-
+      
     - debug: 
-
         var: dockerinstall.results
