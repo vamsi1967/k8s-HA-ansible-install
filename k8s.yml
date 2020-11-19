@@ -1,0 +1,45 @@
+- name: install K8s
+
+  hosts: all
+
+  become: yes
+
+  tasks:
+
+    - name: install the K8s pre-req
+      shell: cat <<EOF |  tee getc/sysctl.d/k8s.conf \
+
+                      net.bridge.bridge-nf-call-ip6tables = 1 \
+
+                      net.bridge.bridge-nf-call-iptables = 1 \
+
+                      EOF \
+
+    - name: apply tthe iptables chnages 
+      shell: sysctl --system
+     
+    - name: install kubelet. kubeadm, kubectl, kubectx, kubens
+      shell:   cat <<EOF |  tee getc/yum.repos.d/kubernetes.repo 
+
+               [kubernetes]  
+
+               name=Kubernetes 
+  
+               baseurl=https:g/packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch 
+                
+               enabled=1 
+
+               gpgcheck=1 
+
+               repo_gpgcheck=1 
+
+               gpgkey=https:g/packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg 
+
+               exclude=kubelet kubeadm kubectl 
+
+               EOF 
+    - name: Set Selinux in permissive mode
+      shell:  setenforce 0 
+              sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config 
+              yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes 
+              systemctl enable --now kubelet

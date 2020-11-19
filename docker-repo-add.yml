@@ -1,0 +1,27 @@
+- name: setup the docker repository && yum-utils
+
+  hosts: all
+
+  become: yes
+
+  gather_facts: no
+
+  tasks:
+
+    - name: install yum-utils
+
+      package: 
+
+        name: 
+
+          - yum-utils
+
+        state: present
+
+    - name: add the repository
+
+      shell: yum-config-manager \
+
+             --add-repo \
+
+             https://download.docker.com/linux/centos/docker-ce.repo
