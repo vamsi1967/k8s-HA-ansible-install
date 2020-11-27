@@ -5,15 +5,17 @@
   tasks:
      - name: Remove if any existig old docker refernences
        package:
-          name:
+          name: "{{modules}}"
+          state: absent
+       vars:
+          modules:
             - docker 
-            - docker-clienr
+            - docker-client
             - docker-client-latest
             - docker-common
             - docker-latest
             - docker-latest-logrotate
             - docker-engine
-          state: absent
        register: dockerremove
        
      - debug: 
