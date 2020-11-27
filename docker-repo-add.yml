@@ -10,6 +10,13 @@
         state: present
 
     - name: add the repository
-      shell: yum-config-manager \
+      shell: : yum-config-manager \
              --add-repo \
              https://download.docker.com/linux/centos/docker-ce.repo
+      args:
+         creates: /etc/yum.repos.d/docker-ce.repo
+      register: docker_repo_add
+    - local_action:
+        module: copy
+        content: "{{ docker_repo_add }}"
+        dest: ~/playbooks/k8s/{{inventory_hostname}}_docker_repo_add
