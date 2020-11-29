@@ -16,6 +16,8 @@
             - docker-latest
             - docker-latest-logrotate
             - docker-engine
+            - docker-selinux
+            - docker-engine-selinux
        register: dockerremove
        
      - debug: 
