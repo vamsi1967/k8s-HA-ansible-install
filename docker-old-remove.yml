@@ -25,5 +25,5 @@
         
      - local_action:
         module: copy
-        content: "{{ docker_repo_add }}"
+        content: "{{ dockerremove }}"
         dest: ~/k8s/playbooks/{{inventory_hostname}}_docker_old_remove
