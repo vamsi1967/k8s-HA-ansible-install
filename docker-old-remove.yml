@@ -20,15 +20,27 @@
             - docker-logrotate
             - docker-engine
             - docker-selinux
+<<<<<<< HEAD
             - container-selinux
+=======
+>>>>>>> f1d19a368618fd3d7d62b54cc445363dec8b5d02
             - docker-engine-selinux
        register: dockerremove
        ignore_errors: yes
        
      - debug: 
+<<<<<<< HEAD
         var: dockerremove
 
      - local_action:
         module: copy
         content: "{{ dockerremove }}"
         dest: /home/kubeadmin/k8s/playbooks/{{inventory_hostname}}_docker_old_remove
+=======
+        var: dockerremove.results
+        
+     - local_action:
+        module: copy
+        content: "{{ dockerremove }}"
+        dest: ~/k8s/playbooks/{{inventory_hostname}}_docker_old_remove
+>>>>>>> f1d19a368618fd3d7d62b54cc445363dec8b5d02
