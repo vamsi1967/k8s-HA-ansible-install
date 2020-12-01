@@ -1,0 +1,6 @@
+- name: control plane init
+  hosts: master1
+  tasks:
+      - name: Kubeadm init on master
+        debug:
+          msg: "{{hostvars['haproxy'].ansible_host}}"

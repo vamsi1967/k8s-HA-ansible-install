@@ -1,0 +1,6 @@
+- name: start the haproxy service
+  gather_facts: no
+  hosts: lb
+  become: yes
+  tasks:
+      - service: name=haproxy state=started 

@@ -1,0 +1,19 @@
+- name: hosts file change
+  become: yes
+  hosts: all
+  tasks:
+     - name: "hosts entry"
+       template:
+           src: hosts.j2
+           dest: /etc/hosts
+           backup: yes
+     - name: "Add default values back"
+       blockinfile:
+               insertbefore: BOF
+               marker: " "
+               block: |
+                  127.0.0.1   localhost controller
+                  ::1         localhost controller
+               path: /etc/hosts
+
+

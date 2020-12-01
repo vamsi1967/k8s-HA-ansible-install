@@ -1,0 +1,9 @@
+- name: "Infra pre-req setup part2"
+  hosts: all
+  become: yes
+  tasks:
+     - name: "change the hostname"
+       lineinfile:
+          regexp: '.*'
+          line: "{{inventory_hostname}}"
+          path: /etc/hostname  #sed -i 's/.*/{{inventory_hostname}}/' /etc/hostname

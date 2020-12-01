@@ -1,5 +1,5 @@
 - name: start the docker service
-  hosts: all
+  hosts: master,worker
   gather_facts: no 
   become: yes
   tasks:
@@ -8,3 +8,9 @@
       name: docker
       state: started
       enabled: yes
+    register: dockerstart
+
+  - local_action:
+        module: copy
+        content: "{{ dockerstart }}"
+        dest: /home/kubeadmin/k8s/playbooks/{{inventory_hostname}}_docker

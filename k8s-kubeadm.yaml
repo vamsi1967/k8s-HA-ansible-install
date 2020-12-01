@@ -1,0 +1,25 @@
+- name: control plane init
+  become: yes
+  hosts: master1
+  tasks:
+      - name: Kubeadm init on master
+        shell: kubeadm init --control-plane-endpoint {{hostvars['haproxy'].ansible_host}}:6443 \
+               --upload-certs \
+               --apiserver-advertise-address {{hostvars['master1'].ansible_host}} \
+               --pod-network-cidr 10.244.0.0/16 \
+               --service-cidr 172.16.0.1/24 
+        register: kubeadmout
+
+      - local_action: copy content=((kubeadmout.stdout}} dest="./token"
+      
+      - name: create the .kube home folder
+        shell: |
+           mkdir -p $HOME/.kube; sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config \
+           sudo chown $(id -u):$(id -g) $HOME/.kube/config \
+
+      - name: Install flannel CNI
+        command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
+        register: cniout
+
+      - local_action: copy content=((cni.stdout}} dest="./cnioutput"
+

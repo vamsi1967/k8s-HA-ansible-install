@@ -1,0 +1,33 @@
+- name: Install k8s packages
+  hosts: master,worker
+  become: yes
+  tasks:
+    - name: Install kubelet and kubeadm on all machines
+      package:
+        name: 
+          - kubelet
+          - kubeadm
+        state: present
+        update_cache: true
+
+    - name: start kubelet
+      service:
+       name: kubelet
+       enabled: yes
+       state: started
+
+    - name: print the kubeadm and kubelet version
+      shell: kubeadm version && kubelet --version
+      register: versionout
+ 
+    - debug: msg={{versionout}}
+
+- name: Install kubelet on Master nodes
+  hosts: master
+  become: yes
+  tasks:
+     - name: install kubectl
+       yum:
+         name: kubectl-1.16.0
+         state: present
+         allow_downgrade: yes

@@ -1,0 +1,10 @@
+- name: HAProxy install
+  hosts: lb
+  gather_facts: no
+  become: yes
+  tasks:
+      - name: Install software
+        package:
+            name: haproxy
+            state: present
+

@@ -1,8 +1,23 @@
-web-01 ansible_host=web-01.internal.cloudapp.net ansible_connection=ssh  ansible_user=xploritecc ansible_ssh_pass=Tem01ppassxrw1sd#007 ansible_become_password=Tem01ppassxrw1sd#007   
-web-02 ansible_host=web-02.internal.cloudapp.net  ansible_user=xploritecc ansible_ssh_pass=Tem01ppassxrw1sd#007 ansible_become_password=Tem01ppassxrw1sd#007
+haproxy ansible_host=192.168.166.9 ansible_username=kubeadmin ansible_ssh_private_key_file=/home/kubeadmin/.ssh/id_rsa
+master1 ansible_host=192.168.166.10 ansible_username=kubeadmin ansible_ssh_private_key_file=/home/kubeadmin/.ssh/id_rsa
+master2 ansible_host=192.168.166.11 ansible_username=kubeadmin ansible_ssh_private_key_file=/home/kubeadmin/.ssh/id_rsa
+worker1 ansible_host=192.168.166.7 ansible_username=kubeadmin ansible_ssh_private_key_file=/home/kubeadmin/.ssh/id_rsa
+worker2 ansible_host=192.168.166.8 ansible_username=kubeadmin ansible_ssh_private_key_file=/home/kubeadmin/.ssh/id_rsa
+
+[lb]
+haproxy
 
 [master]
- web-01
+master1
+master2
 
 [worker]
- web-02
+worker1
+worker2
+
+[k8s]
+haproxy
+master1
+master2
+worker1
+worker2

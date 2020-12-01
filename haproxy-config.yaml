@@ -1,0 +1,8 @@
+- name: haproxy configuration
+  hosts: lb
+  become: yes
+  tasks:
+    - name: haproxy config template
+      template:
+        src: haproxy.j2
+        dest: /etc/haproxy/haproxy.cfg

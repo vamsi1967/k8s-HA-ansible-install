@@ -1,12 +1,14 @@
 - name: create a Docker Runtime environment
-  hosts: all
+  hosts: master,worker
   become: yes
   gather_facts: false
   tasks:
      - name: Remove if any existig old docker refernences
        package:
           name: "{{modules}}"
-          state: absent
+          state: removed
+          update_cache: yes
+          #autoremove: yes
        vars:
           modules:
             - docker 
@@ -15,8 +17,18 @@
             - docker-common
             - docker-latest
             - docker-latest-logrotate
+            - docker-logrotate
             - docker-engine
+            - docker-selinux
+            - container-selinux
+            - docker-engine-selinux
        register: dockerremove
+       ignore_errors: yes
        
      - debug: 
-        var: dockerremove.results
+        var: dockerremove
+
+     - local_action:
+        module: copy
+        content: "{{ dockerremove }}"
+        dest: /home/kubeadmin/k8s/playbooks/{{inventory_hostname}}_docker_old_remove
